@@ -32,31 +32,17 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public String deleteCategory(UUID categoryId) {
-//        categories.removeIf(category -> category.getCategoryId().equals(categoryId));
-//        Category category = categories.stream()
-//                .filter(c -> c.getCategoryId().equals(categoryId))
-//                .findFirst()
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
-        Optional<Category> category = categoryRepository.findById(categoryId);
-        if (category.isEmpty()) {
-            return "Category not found";
-        }
-        categoryRepository.delete(category.get());
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+        categoryRepository.delete(category);
         return "Category deleted successfully";
     }
 
     @Override
     public Category updateCategory(Category category, UUID categoryId) {
         Optional<Category> savedCategory = categoryRepository.findById(categoryId);
-
-        if (savedCategory.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found");
-        }
-
-        Category existingCategory = savedCategory.get();
+        Category existingCategory = savedCategory.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
         existingCategory.setCategoryName(category.getCategoryName());
         categoryRepository.save(existingCategory);
         return existingCategory;
-
     }
 }
