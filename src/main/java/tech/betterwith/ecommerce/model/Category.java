@@ -1,19 +1,34 @@
 package tech.betterwith.ecommerce.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+import java.util.UUID;
+
+@Entity(name = "category")
 public class Category {
-    private Long categoryId;
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @Column(name = "id")
+    private UUID categoryId;
+    @Column(name = "name")
     private String categoryName;
 
-    public Category(Long categoryId, String categoryName) {
-        this.categoryId = categoryId;
+    public Category(String categoryName) {
         this.categoryName = categoryName;
     }
 
-    public Long getCategoryId() {
+    public Category() {
+
+    }
+
+    public UUID getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Long categoryId) {
+    public void setCategoryId(UUID categoryId) {
         this.categoryId = categoryId;
     }
 

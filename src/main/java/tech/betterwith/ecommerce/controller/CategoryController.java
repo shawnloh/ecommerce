@@ -9,6 +9,7 @@ import tech.betterwith.ecommerce.model.Category;
 import tech.betterwith.ecommerce.service.CategoryService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -31,8 +32,8 @@ public class CategoryController {
         return new ResponseEntity<>("Category added successfully", HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/public/admin/{categoryId}")
-    public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId) {
+    @DeleteMapping("/admin/categories/{categoryId}")
+    public ResponseEntity<String> deleteCategory(@PathVariable UUID categoryId) {
         try {
             return new ResponseEntity<>(categoryService.deleteCategory(categoryId), HttpStatus.OK);
         } catch (ResponseStatusException e) {
@@ -40,8 +41,8 @@ public class CategoryController {
         }
     }
 
-    @PutMapping("/public/admin/{categoryId}")
-    public ResponseEntity<String> updateCategory(@RequestBody Category category, @PathVariable Long categoryId) {
+    @PutMapping("/admin/categories/{categoryId}")
+    public ResponseEntity<String> updateCategory(@RequestBody Category category, @PathVariable UUID categoryId) {
         try {
             Category savedCategory = categoryService.updateCategory(category, categoryId);
             return new ResponseEntity<>("Category with category id: " + savedCategory.getCategoryId() + " updated", HttpStatus.OK);
