@@ -1,12 +1,12 @@
 package tech.betterwith.ecommerce.service;
 
 import tech.betterwith.ecommerce.model.Category;
+import tech.betterwith.ecommerce.payload.CategoryResponseDTO;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface CategoryService {
-    List<Category> getAllCategories();
+    CategoryResponseDTO getAllCategories();
 
     void createCategory(Category category);
 

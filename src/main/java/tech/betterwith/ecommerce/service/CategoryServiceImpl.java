@@ -1,10 +1,13 @@
 package tech.betterwith.ecommerce.service;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tech.betterwith.ecommerce.exceptions.APIException;
 import tech.betterwith.ecommerce.exceptions.ResourceNotFoundException;
 import tech.betterwith.ecommerce.model.Category;
+import tech.betterwith.ecommerce.payload.CategoryDTO;
+import tech.betterwith.ecommerce.payload.CategoryResponseDTO;
 import tech.betterwith.ecommerce.repositories.CategoryRepository;
 
 import java.util.List;
@@ -14,19 +17,22 @@ import java.util.UUID;
 @Service
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository, ModelMapper modelMapper) {
         this.categoryRepository = categoryRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
-    public List<Category> getAllCategories() {
+    public CategoryResponseDTO getAllCategories() {
         List<Category> categories = categoryRepository.findAll();
         if (categories.isEmpty()) {
             throw new APIException("No categories found");
         }
-        return categories;
+        List<CategoryDTO> categoryDTOS = categories.stream().map(category -> modelMapper.map(category, CategoryDTO.class)).toList();
+        return new CategoryResponseDTO(categoryDTOS);
     }
 
     @Override

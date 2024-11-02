@@ -6,9 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.betterwith.ecommerce.model.Category;
+import tech.betterwith.ecommerce.payload.CategoryResponseDTO;
 import tech.betterwith.ecommerce.service.CategoryService;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -22,7 +22,7 @@ public class CategoryController {
     }
 
     @GetMapping("/public/categories")
-    public ResponseEntity<List<Category>> getAllCategories() {
+    public ResponseEntity<CategoryResponseDTO> getAllCategories() {
         return new ResponseEntity<>(categoryService.getAllCategories(), HttpStatus.OK);
     }
 
