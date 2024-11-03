@@ -1,16 +1,16 @@
 package tech.betterwith.ecommerce.service;
 
-import tech.betterwith.ecommerce.model.Category;
+import tech.betterwith.ecommerce.payload.CategoryDTO;
 import tech.betterwith.ecommerce.payload.CategoryResponseDTO;
 
 import java.util.UUID;
 
 public interface CategoryService {
-    CategoryResponseDTO getAllCategories();
+    CategoryResponseDTO getAllCategories(int pageNumber, int pageSize, String sortBy, String sortOrder);
 
-    void createCategory(Category category);
+    CategoryDTO createCategory(CategoryDTO categoryDTO);
 
-    String deleteCategory(UUID categoryId);
+    CategoryDTO deleteCategory(UUID categoryId);
 
-    Category updateCategory(Category category, UUID categoryId);
+    CategoryDTO updateCategory(CategoryDTO category, UUID categoryId);
 }
